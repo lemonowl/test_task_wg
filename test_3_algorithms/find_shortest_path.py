@@ -1,6 +1,9 @@
 from random import randint
 import networkx
+from colorama import init, Back
 
+
+init(autoreset=True)
 # море, суша
 SEA, LAND = 0, 1
 
@@ -26,13 +29,6 @@ def generate_map(rows, columns, start, finish, land_percentage=0.3):
             sea_map[row][col] = LAND
             land_cells -= 1
     return sea_map
-
-
-def print_map(sea_map):
-    """Показать карту
-    """
-    for row in sea_map:
-        print(' '.join([str(i) for i in row]))
 
 
 def draw_shortest_path(sea_map, start, finish):
@@ -65,17 +61,24 @@ def draw_shortest_path(sea_map, start, finish):
                     if 0 <= new_row < rows and 0 <= new_col < columns and sea_map[new_row][new_col] == SEA:
                         map_graph.add_edge((row, col), (new_row, new_col))
 
+    shortest_path = []
     try:
         shortest_path = networkx.shortest_path(map_graph, start, finish)
-    except networkx.NetworkXNoPath as e:
-        print(e)
+    except networkx.NetworkXNoPath:
         print('Между указанными точками нет пути по морю на данной сгенерированной карте при заданных условиях')
-    else:
-        for row, col in shortest_path:
-            sea_map[row][col] = '-'
-    sea_map[start[0]][start[1]] = 'A'
-    sea_map[finish[0]][finish[1]] = 'B'
-    print_map(sea_map)
+    for row in range(rows):
+        for col in range(columns):
+            coord = (row, col)
+            i = sea_map[row][col]
+            if coord == start:
+                sea_map[row][col] = f'{Back.RED}A'
+            elif coord == finish:
+                sea_map[row][col] = f'{Back.RED}B'
+            elif coord in shortest_path:
+                sea_map[row][col] = f'{Back.LIGHTBLUE_EX}{i}'
+            else:
+                sea_map[row][col] = f'{Back.GREEN if i else Back.BLUE}{i}'
+        print(' '.join(sea_map[row]))
 
 
 def start_prog(rows, columns, start, end):
@@ -89,18 +92,16 @@ def start_prog(rows, columns, start, end):
     # смещаем координаты под индексы матрицы
     start = (start[0] - 1, start[1] - 1)
     end = (end[0] - 1, end[1] - 1)
-    print(start, end)
+    print(f'Где-то в Японии: {start}->{end}')
     # генерируем карту
-    sea_map = generate_map(m, n, start, end)
-    # print_map(sea_map)
-    print()
+    automap = generate_map(m, n, start, end)
     # ищем кратчайший путь
-    draw_shortest_path(sea_map, start, end)
+    draw_shortest_path(automap, start, end)
 
 
 # пользовательские данные
-m = 25
-n = 40
+m = 20
+n = 30
 start_point = (randint(1, m), randint(1, n))
 end_point = (randint(1, m), randint(1, n))
 
