@@ -1,6 +1,6 @@
 import pytest
-from test_2_engine.engine.models import Circle
-from test_2_engine.engine.canvas import Canvas
+from test_2_oop.engine.models import Circle
+from test_2_oop.engine.canvas import Canvas
 
 
 class TestCanvas:

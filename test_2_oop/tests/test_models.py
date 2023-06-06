@@ -1,5 +1,5 @@
 import pytest
-from test_2_engine.engine.models import Circle, Triangle, Rectangle
+from test_2_oop.engine.models import Circle, Triangle, Rectangle
 
 
 class TestModels:

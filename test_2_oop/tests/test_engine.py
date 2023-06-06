@@ -1,5 +1,5 @@
-from test_2_engine.engine.models import Circle
-from test_2_engine.engine import Engine2D
+from test_2_oop.engine.models import Circle
+from test_2_oop.engine import Engine2D
 
 
 class TestEngine:
