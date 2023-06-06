@@ -13,6 +13,11 @@ class Triangle(Figure):
     _apex_c: tuple
 
     def __init__(self, apex_a: tuple, apex_b: tuple, apex_c: tuple):
+        """
+        :param apex_a: координата вершины A треугольника
+        :param apex_b: координата вершины B треугольника
+        :param apex_c: координата вершины C треугольника
+        """
         self._apex_a = apex_a
         self._apex_b = apex_b
         self._apex_c = apex_c
