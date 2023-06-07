@@ -82,8 +82,8 @@ def draw_shortest_path(sea_map, start, finish):
 
 
 def start_prog(rows, columns, start, end):
-    if type(rows) is not int or type(columns) is not int or rows <= 0 or columns <= 0:
-        raise ValueError('Размеры поля должны быть указаны в виде натуральных чисел')
+    if any(type(value) is not int or value <= 0 for value in [rows, columns, *start, *end]):
+        raise TypeError('Размеры поля и координаты точек должны быть указаны в виде натуральных чисел')
     if not ((0 <= start[0] < rows) or (0 <= start[1] < columns)):
         raise ValueError('Координаты начальной точки находятся за пределами поля')
     if not ((0 <= end[0] < rows) or (0 <= end[1] < columns)):
@@ -92,7 +92,7 @@ def start_prog(rows, columns, start, end):
     # смещаем координаты под индексы матрицы
     start = (start[0] - 1, start[1] - 1)
     end = (end[0] - 1, end[1] - 1)
-    print(f'Где-то в Японии: {start}->{end}')
+    print(f'Где-то в Японии: старт {start}-> финиш {end}')
     # генерируем карту
     automap = generate_map(m, n, start, end)
     # ищем кратчайший путь
